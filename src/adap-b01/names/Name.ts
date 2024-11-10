@@ -85,5 +85,6 @@ export class Name {
 		for (let j = i + 1; j < this.components.length; j++) {
 			newComponents[j - 1] = this.components[j];
 		}
+		this.components = newComponents;
 	}
 }

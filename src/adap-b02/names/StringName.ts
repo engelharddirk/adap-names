@@ -1,58 +1,119 @@
-import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
-import { Name } from "./Name";
+import { type Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
+import { StringArrayName } from "./StringArrayName";
 
 export class StringName implements Name {
+	protected delimiter: string = DEFAULT_DELIMITER;
 
-    protected delimiter: string = DEFAULT_DELIMITER;
-    protected name: string = "";
-    protected noComponents: number = 0;
+	protected name: string = "";
+	protected length: number = 0;
 
-    constructor(other: string, delimiter?: string) {
-        throw new Error("needs implementation");
-    }
+	constructor(other: string, delimiter?: string) {
+		this.name = other;
+		this.delimiter = delimiter ?? DEFAULT_DELIMITER;
+		this.length = other.split(this.delimiter).length;
+	}
 
-    public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
-    }
+	private arrToStr(arr: string[]) {
+		let str = "";
+		for (let j = 0; j < arr.length - 1; j++) {
+			str = str + arr[j] + (this.delimiter ?? DEFAULT_DELIMITER);
+		}
+		str = str + arr[arr.length - 1];
+		return str;
+	}
 
-    public asDataString(): string {
-        throw new Error("needs implementation");
-    }
+	private escapedSplit(string: string): string[] {
+		const ret: string[] = [];
+		let skip = false;
+		let component = "";
+		for (let i = 0; i < string.length;  i++) {
+			switch (string[i]) {
+				case ESCAPE_CHARACTER: {
+					skip = true;
+					break;
+				}
+				case this.delimiter: {
+					if (skip === true) {
+						skip = false;
+						break;
+					}
+					ret.push(component);
+                    component = ""
+					break;
+				}
+				default: {
+					component = `${component}${string[i]}`;
+				}
+			}
+		}
+        ret.push(component)
+		return ret;
+	}
 
-    public getDelimiterCharacter(): string {
-        throw new Error("needs implementation");
-    }
+	public asString(delimiter: string = this.delimiter): string {
+		return this.name.replace(ESCAPE_CHARACTER, "");
+	}
 
-    public isEmpty(): boolean {
-        throw new Error("needs implementation");
-    }
+	public asDataString(): string {
+		throw this.name;
+	}
 
-    public getNoComponents(): number {
-        throw new Error("needs implementation");
-    }
+	public isEmpty(): boolean {
+		return this.length === 0;
+	}
 
-    public getComponent(x: number): string {
-        throw new Error("needs implementation");
-    }
+	public getDelimiterCharacter(): string {
+		return this.delimiter;
+	}
 
-    public setComponent(n: number, c: string): void {
-        throw new Error("needs implementation");
-    }
+	public getNoComponents(): number {
+		return this.length;
+	}
 
-    public insert(n: number, c: string): void {
-        throw new Error("needs implementation");
-    }
+	public getComponent(x: number): string {
+		return this.escapedSplit(this.name)[x];
+	}
 
-    public append(c: string): void {
-        throw new Error("needs implementation");
-    }
+	public setComponent(n: number, c: string): void {
+		const arr = this.escapedSplit(this.name);
+		arr[n] = c;
+		this.name = this.arrToStr(arr);
+	}
 
-    public remove(n: number): void {
-        throw new Error("needs implementation");
-    }
 
-    public concat(other: Name): void {
-        throw new Error("needs implementation");
-    }
+	public insert(n: number, c: string): void {
+		const components = this.escapedSplit(this.name);
+		const newComponents: string[] = [];
+		for (let j = 0; j < n; j++) {
+			newComponents[j] = components[j];
+		}
+		newComponents[n] = c;
+		for (let j = n + 1; j < components.length + 1; j++) {
+			newComponents[j] = components[j - 1];
+		}
+		this.name = this.arrToStr(newComponents);
+	}
 
+	public append(c: string): void {
+        const arr = this.escapedSplit(this.name);
+		arr.push(c);
+        this.name = this.arrToStr(arr);
+	}
+
+	public remove(n: number): void {
+		const arr = this.escapedSplit(this.name);
+        const newComponents: string[] = [];
+        for (let j = 0; j < n; j++) {
+			newComponents[j] = arr[j];
+		}
+		for (let j = n + 1; j < arr.length; j++) {
+			newComponents[j - 1] = arr[j];
+		}
+        this.name = this.arrToStr(newComponents)
+	}
+
+	public concat(other: Name): void {
+		this.name = `${this.name}${other}`;
+	}
 }
+
