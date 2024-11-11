@@ -1,48 +1,47 @@
 import { type Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
 
 export class StringArrayName implements Name {
-
-    protected components: string[] = [];
-    protected delimiter: string = DEFAULT_DELIMITER;
-
-
+	protected components: string[] = [];
+	protected delimiter: string = DEFAULT_DELIMITER;
 
 	constructor(other: string[], delimiter?: string) {
 		this.components = other;
 		this.delimiter = delimiter ?? DEFAULT_DELIMITER;
-/* 		for (const str in other) {
+		/* 		for (const str in other) {
 			if (str.includes(this.delimiter)) {
 				str.replace(this.delimiter, this.ESCAPE_CHARACTER + delimiter);
 			}
 		} */
 	}
-    asString(delimiter?: string): string {
-        let str = "";
+	asString(delimiter?: string): string {
+		let str = "";
 		for (let j = 0; j < this.components.length - 1; j++) {
 			str = str + this.components[j] + this.delimiter;
 		}
 		str = str + this.components[this.components.length - 1];
 		return str;
-    }
+	}
 
-
-    asDataString(): string {
-        let str = "";
+	asDataString(): string {
+		let str = "";
 		for (let j = 0; j < this.components.length - 1; j++) {
-            const escapedComponent = this.components[j].replace(this.delimiter, ESCAPE_CHARACTER + this.delimiter);
+			const escapedComponent = this.components[j].replace(
+				this.delimiter,
+				ESCAPE_CHARACTER + this.delimiter,
+			);
 			str = str + escapedComponent + this.delimiter;
 		}
 		str = str + this.components[this.components.length - 1];
 		return str;
-    }
+	}
 
-    isEmpty(): boolean {
-        return this.components.length === 0
-    }
+	isEmpty(): boolean {
+		return this.components.length === 0;
+	}
 
-    getDelimiterCharacter(): string {
-        return this.delimiter;
-    }
+	getDelimiterCharacter(): string {
+		return this.delimiter;
+	}
 
 	/** @methodtype get-method */
 	public getComponent(i: number): string {
@@ -54,8 +53,8 @@ export class StringArrayName implements Name {
 		this.components[i] = c;
 	}
 
-    /** Returns number of components in Name instance */
- 	/** @methodtype get-method */
+	/** Returns number of components in Name instance */
+	/** @methodtype get-method */
 	public getNoComponents(): number {
 		return this.components.length;
 	}
@@ -87,7 +86,6 @@ export class StringArrayName implements Name {
 		for (let j = i + 1; j < this.components.length; j++) {
 			newComponents[j - 1] = this.components[j];
 		}
-        this.components = newComponents
+		this.components = newComponents;
 	}
-
 }
