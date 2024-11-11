@@ -26,7 +26,7 @@ export class StringName implements Name {
 		const ret: string[] = [];
 		let skip = false;
 		let component = "";
-		for (let i = 0; i < string.length;  i++) {
+		for (let i = 0; i < string.length; i++) {
 			switch (string[i]) {
 				case ESCAPE_CHARACTER: {
 					skip = true;
@@ -38,7 +38,7 @@ export class StringName implements Name {
 						break;
 					}
 					ret.push(component);
-                    component = ""
+					component = "";
 					break;
 				}
 				default: {
@@ -46,7 +46,7 @@ export class StringName implements Name {
 				}
 			}
 		}
-        ret.push(component)
+		ret.push(component);
 		return ret;
 	}
 
@@ -80,7 +80,6 @@ export class StringName implements Name {
 		this.name = this.arrToStr(arr);
 	}
 
-
 	public insert(n: number, c: string): void {
 		const components = this.escapedSplit(this.name);
 		const newComponents: string[] = [];
@@ -95,25 +94,24 @@ export class StringName implements Name {
 	}
 
 	public append(c: string): void {
-        const arr = this.escapedSplit(this.name);
+		const arr = this.escapedSplit(this.name);
 		arr.push(c);
-        this.name = this.arrToStr(arr);
+		this.name = this.arrToStr(arr);
 	}
 
 	public remove(n: number): void {
 		const arr = this.escapedSplit(this.name);
-        const newComponents: string[] = [];
-        for (let j = 0; j < n; j++) {
+		const newComponents: string[] = [];
+		for (let j = 0; j < n; j++) {
 			newComponents[j] = arr[j];
 		}
 		for (let j = n + 1; j < arr.length; j++) {
 			newComponents[j - 1] = arr[j];
 		}
-        this.name = this.arrToStr(newComponents)
+		this.name = this.arrToStr(newComponents);
 	}
 
 	public concat(other: Name): void {
 		this.name = `${this.name}${other}`;
 	}
 }
-
