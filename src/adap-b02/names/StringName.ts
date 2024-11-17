@@ -58,6 +58,10 @@ export class StringName implements Name {
 		throw this.name;
 	}
 
+	public clone(): StringName {
+		return new StringName(this.name, this.delimiter);
+	}
+
 	public isEmpty(): boolean {
 		return this.length === 0;
 	}

@@ -22,6 +22,10 @@ export class StringArrayName implements Name {
 		return str;
 	}
 
+	public clone(): Name {
+		return new StringArrayName(this.components, this.delimiter);
+	}
+
 	asDataString(): string {
 		let str = "";
 		for (let j = 0; j < this.components.length - 1; j++) {
