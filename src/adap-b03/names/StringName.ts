@@ -8,68 +8,90 @@ export class StringName extends AbstractName {
     protected noComponents: number = 0;
 
     constructor(other: string, delimiter?: string) {
-        super();
-        throw new Error("needs implementation");
+		super(delimiter);
+		this.name = other;
+		this.length = other.split(this.delimiter).length;
     }
 
-    public clone(): Name {
-        throw new Error("needs implementation");
+	private arrToStr(arr: string[]) {
+		let str = "";
+		for (let j = 0; j < arr.length - 1; j++) {
+			str = str + arr[j] + (this.delimiter ?? DEFAULT_DELIMITER);
+		}
+		str = str + arr[arr.length - 1];
+		return str;
+	}
+
+	private escapedSplit(string: string): string[] {
+		const ret: string[] = [];
+		let skip = false;
+		let component = "";
+		for (let i = 0; i < string.length; i++) {
+			switch (string[i]) {
+				case ESCAPE_CHARACTER: {
+					skip = true;
+					break;
+				}
+				case this.delimiter: {
+					if (skip === true) {
+						skip = false;
+						break;
+					}
+					ret.push(component);
+					component = "";
+					break;
+				}
+				default: {
+					component = `${component}${string[i]}`;
+				}
+			}
+		}
+		ret.push(component);
+		return ret;
+	}
+    getNoComponents(): number {
+       return this.length;
     }
 
-    public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
+    getComponent(x: number): string {
+        return this.escapedSplit(this.name)[x];
+    }
+    setComponent(n: number, c: string) {
+        const arr = this.escapedSplit(this.name);
+		arr[n] = c;
+		this.name = this.arrToStr(arr);
     }
 
-    public toString(): string {
-        throw new Error("needs implementation");
+    insert(n: number, c: string) {
+        const components = this.escapedSplit(this.name);
+		const newComponents: string[] = [];
+		for (let j = 0; j < n; j++) {
+			newComponents[j] = components[j];
+		}
+		newComponents[n] = c;
+		for (let j = n + 1; j < components.length + 1; j++) {
+			newComponents[j] = components[j - 1];
+		}
+		this.name = this.arrToStr(newComponents);
+		this.length++;
     }
-
-    public asDataString(): string {
-        throw new Error("needs implementation");
+    append(c: string) {
+        const arr = this.escapedSplit(this.name);
+		arr.push(c);
+		this.name = this.arrToStr(arr);
+		this.length++;
     }
-
-    public isEqual(other: Name): boolean {
-        throw new Error("needs implementation");
-    }
-
-    public getHashCode(): number {
-        throw new Error("needs implementation");
-    }
-
-    public isEmpty(): boolean {
-        throw new Error("needs implementation");
-    }
-
-    public getDelimiterCharacter(): string {
-        throw new Error("needs implementation");
-    }
-
-    public getNoComponents(): number {
-        throw new Error("needs implementation");
-    }
-
-    public getComponent(i: number): string {
-        throw new Error("needs implementation");
-    }
-
-    public setComponent(i: number, c: string) {
-        throw new Error("needs implementation");
-    }
-
-    public insert(i: number, c: string) {
-        throw new Error("needs implementation");
-    }
-
-    public append(c: string) {
-        throw new Error("needs implementation");
-    }
-
-    public remove(i: number) {
-        throw new Error("needs implementation");
-    }
-
-    public concat(other: Name): void {
-        throw new Error("needs implementation");
+    remove(n: number) {
+        const arr = this.escapedSplit(this.name);
+		const newComponents: string[] = [];
+		for (let j = 0; j < n; j++) {
+			newComponents[j] = arr[j];
+		}
+		for (let j = n + 1; j < arr.length; j++) {
+			newComponents[j - 1] = arr[j];
+		}
+		this.length--;
+		this.name = this.arrToStr(newComponents);
     }
 
 }

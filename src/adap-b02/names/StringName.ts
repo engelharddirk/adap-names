@@ -91,12 +91,14 @@ export class StringName implements Name {
 			newComponents[j] = components[j - 1];
 		}
 		this.name = this.arrToStr(newComponents);
+		this.length++;
 	}
 
 	public append(c: string): void {
 		const arr = this.escapedSplit(this.name);
 		arr.push(c);
 		this.name = this.arrToStr(arr);
+		this.length++;
 	}
 
 	public remove(n: number): void {
@@ -108,6 +110,7 @@ export class StringName implements Name {
 		for (let j = n + 1; j < arr.length; j++) {
 			newComponents[j - 1] = arr[j];
 		}
+		this.length--;
 		this.name = this.arrToStr(newComponents);
 	}
 

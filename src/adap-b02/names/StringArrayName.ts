@@ -16,7 +16,7 @@ export class StringArrayName implements Name {
 	asString(delimiter?: string): string {
 		let str = "";
 		for (let j = 0; j < this.components.length - 1; j++) {
-			str = str + this.components[j] + this.delimiter;
+			str = str + this.components[j] + (delimiter ?? this.delimiter);
 		}
 		str = str + this.components[this.components.length - 1];
 		return str;

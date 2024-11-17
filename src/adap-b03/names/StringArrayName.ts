@@ -7,67 +7,43 @@ export class StringArrayName extends AbstractName {
     protected components: string[] = [];
 
     constructor(other: string[], delimiter?: string) {
-        super();
-        throw new Error("needs implementation");
+        super(delimiter);
+        this.components = other;
     }
 
-    public clone(): Name {
-        throw new Error("needs implementation");
+    getNoComponents(): number {
+        return this.components.length;
     }
 
-    public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
+    getComponent(i: number): string {
+        return this.components[i];
+    }
+    setComponent(i: number, c: string) {
+        this.components[i] = c;
     }
 
-    public toString(): string {
-        throw new Error("needs implementation");
+    insert(i: number, c: string) {
+        const newComponents: string[] = [];
+		for (let j = 0; j < i; j++) {
+			newComponents[j] = this.components[j];
+		}
+		newComponents[i] = c;
+		for (let j = i + 1; j < this.components.length + 1; j++) {
+			newComponents[j] = this.components[j - 1];
+		}
+		this.components = newComponents;
     }
-
-    public asDataString(): string {
-        throw new Error("needs implementation");
+    append(c: string) {
+        this.components.push(c);
     }
-
-    public isEqual(other: Name): boolean {
-        throw new Error("needs implementation");
-    }
-
-    public getHashCode(): number {
-        throw new Error("needs implementation");
-    }
-
-    public isEmpty(): boolean {
-        throw new Error("needs implementation");
-    }
-
-    public getDelimiterCharacter(): string {
-        throw new Error("needs implementation");
-    }
-
-    public getNoComponents(): number {
-        throw new Error("needs implementation");
-    }
-
-    public getComponent(i: number): string {
-        throw new Error("needs implementation");
-    }
-
-    public setComponent(i: number, c: string) {
-        throw new Error("needs implementation");
-    }
-
-    public insert(i: number, c: string) {
-        throw new Error("needs implementation");
-    }
-
-    public append(c: string) {
-        throw new Error("needs implementation");
-    }
-
-    public remove(i: number) {
-        throw new Error("needs implementation");
-    }
-
-    public concat(other: Name): void {
-        throw new Error("needs implementation");
+    remove(i: number) {
+        const newComponents: string[] = [];
+		for (let j = 0; j < i; j++) {
+			newComponents[j] = this.components[j];
+		}
+		for (let j = i + 1; j < this.components.length; j++) {
+			newComponents[j - 1] = this.components[j];
+		}
+		this.components = newComponents;
     }
 }

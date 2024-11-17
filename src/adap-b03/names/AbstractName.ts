@@ -6,12 +6,18 @@ export abstract class AbstractName implements Name {
     protected delimiter: string = DEFAULT_DELIMITER;
 
     constructor(delimiter: string = DEFAULT_DELIMITER) {
-        throw new Error("needs implementation");
+        this.delimiter = delimiter ?? DEFAULT_DELIMITER;
     }
 
-    public clone(): Name {
-        throw new Error("needs implementation");
+    simpleHash(input: string): number {
+    let hash = 0;
+    for (let i = 0; i < input.length; i++) {
+        const char = input.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash |= 0;
     }
+    return hash;
+}
 
     public asString(delimiter: string = this.delimiter): string {
         throw new Error("needs implementation");
@@ -22,23 +28,27 @@ export abstract class AbstractName implements Name {
     }
 
     public asDataString(): string {
-        throw new Error("needs implementation");
+        return JSON.stringify(this);
     }
 
     public isEqual(other: Name): boolean {
-        throw new Error("needs implementation");
+        return other.getHashCode() === this.getHashCode();
     }
 
     public getHashCode(): number {
         throw new Error("needs implementation");
     }
 
-    public isEmpty(): boolean {
+    public clone(): Name {
         throw new Error("needs implementation");
     }
 
+    public isEmpty(): boolean {
+        return this.asDataString().length === 0;
+    }
+
     public getDelimiterCharacter(): string {
-        throw new Error("needs implementation");
+        return this.delimiter;
     }
 
     abstract getNoComponents(): number;
