@@ -3,6 +3,20 @@ import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 
 export class StringArrayName extends AbstractName {
+    asString(delimiter?: string): string {
+        let str = "";
+		for (let j = 0; j < this.components.length - 1; j++) {
+			str = str + this.components[j] + (delimiter ?? this.delimiter);
+		}
+		str = str + this.components[this.components.length - 1];
+		return str;
+    }
+    toString(): string {
+        return this.asString();
+    }
+    clone(): StringArrayName {
+        return new StringArrayName(this.components, this.delimiter);
+    }
 
     protected components: string[] = [];
 

@@ -19,13 +19,11 @@ export abstract class AbstractName implements Name {
     return hash;
 }
 
-    public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
-    }
+    abstract asString(): string;
 
-    public toString(): string {
-        throw new Error("needs implementation");
-    }
+    public toString(): string{
+        return this.asString();
+    };
 
     public asDataString(): string {
         return JSON.stringify(this);
@@ -39,9 +37,7 @@ export abstract class AbstractName implements Name {
         throw new Error("needs implementation");
     }
 
-    public clone(): Name {
-        throw new Error("needs implementation");
-    }
+    abstract clone(): Name
 
     public isEmpty(): boolean {
         return this.asDataString().length === 0;

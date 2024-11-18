@@ -3,6 +3,21 @@ import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 
 export class StringName extends AbstractName {
+	asString(delimiter: string = this.delimiter): string {
+		let str = this.name.replace(ESCAPE_CHARACTER, "");
+		if(delimiter){
+			str = str.replace(this.delimiter, delimiter);
+		}
+		return str;
+	}
+
+	clone(): StringName {
+		return new StringName(this.name, this.delimiter);
+	}
+
+	public asDataString(): string {
+		return this.name;
+	}
 
     protected name: string = "";
     protected noComponents: number = 0;

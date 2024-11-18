@@ -51,11 +51,15 @@ export class StringName implements Name {
 	}
 
 	public asString(delimiter: string = this.delimiter): string {
-		return this.name.replace(ESCAPE_CHARACTER, "");
+		let str = this.name.replace(ESCAPE_CHARACTER, "");
+		if(delimiter){
+			str = str.replace(this.delimiter, delimiter);
+		}
+		return str;
 	}
 
 	public asDataString(): string {
-		throw this.name;
+		return this.name;
 	}
 
 	public clone(): StringName {
