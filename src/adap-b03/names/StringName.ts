@@ -4,7 +4,25 @@ import { AbstractName } from "./AbstractName";
 import { StringArrayName } from "./StringArrayName";
 
 export class StringName extends AbstractName {
-	concat(other: Name): void {
+    protected name: string = "";
+    protected length: number = 0;
+
+    constructor(other: string, delimiter?: string) {
+		super(delimiter);
+		this.name = other;
+		this.length = other.split(this.delimiter).length;
+    }
+
+	private arrToStr(arr: string[]) {
+		let str = "";
+		for (let j = 0; j < arr.length - 1; j++) {
+			str = str + arr[j] + (this.delimiter ?? DEFAULT_DELIMITER);
+		}
+		str = str + arr[arr.length - 1];
+		return str;
+	}
+
+		concat(other: Name): void {
 		if(other instanceof StringArrayName){
 			let components = this.escapedSplit(other.asDataString())
 			for(let component of components){
@@ -33,24 +51,6 @@ export class StringName extends AbstractName {
 
 	public asDataString(): string {
 		return this.name;
-	}
-
-    protected name: string = "";
-    protected noComponents: number = 0;
-
-    constructor(other: string, delimiter?: string) {
-		super(delimiter);
-		this.name = other;
-		this.length = other.split(this.delimiter).length;
-    }
-
-	private arrToStr(arr: string[]) {
-		let str = "";
-		for (let j = 0; j < arr.length - 1; j++) {
-			str = str + arr[j] + (this.delimiter ?? DEFAULT_DELIMITER);
-		}
-		str = str + arr[arr.length - 1];
-		return str;
 	}
 
     getNoComponents(): number {

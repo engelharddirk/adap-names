@@ -4,6 +4,14 @@ import { AbstractName } from "./AbstractName";
 import { StringName } from "./StringName";
 
 export class StringArrayName extends AbstractName {
+
+    protected components: string[] = [];
+
+    constructor(other: string[], delimiter?: string) {
+        super(delimiter);
+        this.components = other;
+    }
+
     concat(other: Name): void {
         if(other instanceof StringArrayName){
 			for(let component of other.components){
@@ -46,12 +54,6 @@ export class StringArrayName extends AbstractName {
         return new StringArrayName(this.components, this.delimiter);
     }
 
-    protected components: string[] = [];
-
-    constructor(other: string[], delimiter?: string) {
-        super(delimiter);
-        this.components = other;
-    }
 
     getNoComponents(): number {
         return this.components.length;
