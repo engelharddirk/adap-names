@@ -53,6 +53,7 @@ export abstract class AbstractName implements Name {
         return this.asString();
     };
 
+    /* Abstract implementation just uses generic JSON stringify, should be overridden */
     public asDataString(): string {
         return JSON.stringify(this);
     }

@@ -18,6 +18,19 @@ export class StringArrayName extends AbstractName {
 		}
     }
 
+    public asDataString(): string {
+        let str = "";
+		for (let j = 0; j < this.components.length - 1; j++) {
+			const escapedComponent = this.components[j].replace(
+				this.delimiter,
+				ESCAPE_CHARACTER + this.delimiter,
+			);
+			str = str + escapedComponent + this.delimiter;
+		}
+		str = str + this.components[this.components.length - 1];
+		return str;
+    }
+
     asString(delimiter?: string): string {
         let str = "";
 		for (let j = 0; j < this.components.length - 1; j++) {
