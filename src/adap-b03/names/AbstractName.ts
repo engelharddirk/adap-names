@@ -9,6 +9,34 @@ export abstract class AbstractName implements Name {
         this.delimiter = delimiter ?? DEFAULT_DELIMITER;
     }
 
+    escapedSplit(string: string): string[] {
+		const ret: string[] = [];
+		let skip = false;
+		let component = "";
+		for (let i = 0; i < string.length; i++) {
+			switch (string[i]) {
+				case ESCAPE_CHARACTER: {
+					skip = true;
+					break;
+				}
+				case this.delimiter: {
+					if (skip === true) {
+						skip = false;
+						break;
+					}
+					ret.push(component);
+					component = "";
+					break;
+				}
+				default: {
+					component = `${component}${string[i]}`;
+				}
+			}
+		}
+		ret.push(component);
+		return ret;
+	}
+
     simpleHash(input: string): number {
     let hash = 0;
     for (let i = 0; i < input.length; i++) {
@@ -56,8 +84,6 @@ export abstract class AbstractName implements Name {
     abstract append(c: string): void;
     abstract remove(i: number): void;
 
-    public concat(other: Name): void {
-        throw new Error("needs implementation");
-    }
+    abstract concat(other: Name): void
 
 }

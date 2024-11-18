@@ -1,8 +1,24 @@
 import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
+import { StringArrayName } from "./StringArrayName";
 
 export class StringName extends AbstractName {
+	concat(other: Name): void {
+		if(other instanceof StringArrayName){
+			let components = this.escapedSplit(other.asDataString())
+			for(let component of components){
+				this.append(component);
+			}
+        }
+        if(other instanceof StringName){
+            let components = this.escapedSplit(other.asDataString());
+            for(let component of components){
+                this.append(component);
+			}
+		}
+	}
+
 	asString(delimiter: string = this.delimiter): string {
 		let str = this.name.replace(ESCAPE_CHARACTER, "");
 		if(delimiter){
@@ -37,33 +53,6 @@ export class StringName extends AbstractName {
 		return str;
 	}
 
-	private escapedSplit(string: string): string[] {
-		const ret: string[] = [];
-		let skip = false;
-		let component = "";
-		for (let i = 0; i < string.length; i++) {
-			switch (string[i]) {
-				case ESCAPE_CHARACTER: {
-					skip = true;
-					break;
-				}
-				case this.delimiter: {
-					if (skip === true) {
-						skip = false;
-						break;
-					}
-					ret.push(component);
-					component = "";
-					break;
-				}
-				default: {
-					component = `${component}${string[i]}`;
-				}
-			}
-		}
-		ret.push(component);
-		return ret;
-	}
     getNoComponents(): number {
        return this.length;
     }

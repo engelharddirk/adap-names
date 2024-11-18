@@ -1,8 +1,23 @@
 import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
+import { StringName } from "./StringName";
 
 export class StringArrayName extends AbstractName {
+    concat(other: Name): void {
+        if(other instanceof StringArrayName){
+			for(let component of other.components){
+                this.components.push(component);
+			}
+        }
+        if(other instanceof StringName){
+            let components = this.escapedSplit(other.asDataString());
+            for(let component of components){
+                this.components.push(component);
+			}
+		}
+    }
+
     asString(delimiter?: string): string {
         let str = "";
 		for (let j = 0; j < this.components.length - 1; j++) {
