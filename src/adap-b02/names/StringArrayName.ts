@@ -13,6 +13,11 @@ export class StringArrayName implements Name {
 			}
 		} */
 	}
+
+	concat(other: Name): void {
+		throw new Error("Method not implemented.");
+	}
+
 	asString(delimiter?: string): string {
 		let str = "";
 		for (let j = 0; j < this.components.length - 1; j++) {

@@ -30,6 +30,14 @@ export class Name {
 		} */
 	}
 
+	public asString(): string {
+		return this.asNameString();
+	}
+
+	public asDataString(): string {
+		return this.asNameString();
+	}
+
 	/** Returns human-readable representation of Name instance */
 	/** @methodtype conversion-method */
 	public asNameString(delimiter: string = this.delimiter): string {
