@@ -1,4 +1,5 @@
-import { type Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
+import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
+import type { Name } from "./Name";
 import { StringArrayName } from "./StringArrayName";
 
 export class StringName implements Name {

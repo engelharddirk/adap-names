@@ -1,4 +1,5 @@
-import { type Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
+import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
+import type { Name } from "./Name";
 
 export class StringArrayName implements Name {
 	protected components: string[] = [];
