@@ -1,3 +1,4 @@
+import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { Name } from "../names/Name";
 import { StringName } from "../names/StringName";
 import { Directory } from "./Directory";
@@ -20,10 +21,16 @@ export class RootNode extends Directory {
     }
 
     public move(to: Directory): void {
+        if(to === this){
+            throw new IllegalArgumentException("You have to move to a different directory");
+        }
         // null operation
     }
 
     protected doSetBaseName(bn: string): void {
+        if(bn === ""){
+            throw new IllegalArgumentException("Please provide a valid name");
+        }
         // null operation
     }
 

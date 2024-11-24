@@ -63,7 +63,7 @@ export abstract class AbstractName implements Name {
     }
 
     public getHashCode(): number {
-        throw new Error("needs implementation");
+        return this.simpleHash(this.asDataString());
     }
 
     abstract clone(): Name

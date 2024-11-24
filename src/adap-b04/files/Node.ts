@@ -1,3 +1,4 @@
+import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { Name } from "../names/Name";
 import { Directory } from "./Directory";
 
@@ -31,6 +32,9 @@ export class Node {
     }
 
     public rename(bn: string): void {
+        if (!bn) {
+            throw new IllegalArgumentException("Base name cannot be empty or null.");
+        }
         this.doSetBaseName(bn);
     }
 
