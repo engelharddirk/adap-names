@@ -60,7 +60,7 @@ export abstract class AbstractName implements Name {
     }
 
     public isEqual(other: Name): boolean {
-        if (!other) {
+        if (other === null) {
             throw new IllegalArgumentException("Other name cannot be null");
         }
         return other.getHashCode() === this.getHashCode();
@@ -68,9 +68,6 @@ export abstract class AbstractName implements Name {
 
     public getHashCode(): number {
         const hashCode = this.simpleHash(this.asDataString());
-        if (hashCode === 0) {
-            throw new MethodFailureException("Hash code calculation failed, resulting hash code cannot be zero.");
-        }
         return hashCode;
     }
 

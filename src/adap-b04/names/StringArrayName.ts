@@ -69,8 +69,8 @@ export class StringArrayName extends AbstractName {
         if (i < 0 || i >= this.components.length) {
             throw new IllegalArgumentException("Index out of bounds");
         }
-        if (!c) {
-            throw new IllegalArgumentException("Component cannot be empty or null.");
+        if (c === null) {
+            throw new IllegalArgumentException("Component cannot be ull.");
         }
         this.components[i] = c;
     }
@@ -79,8 +79,8 @@ export class StringArrayName extends AbstractName {
         if (i < 0 || i > this.components.length) {
             throw new IllegalArgumentException("Index out of bounds");
         }
-        if (!c) {
-            throw new IllegalArgumentException("Component cannot be empty or null.");
+        if (c === null) {
+            throw new IllegalArgumentException("Component cannot be null.");
         }
         const newComponents: string[] = [];
 		for (let j = 0; j < i; j++) {
@@ -96,8 +96,8 @@ export class StringArrayName extends AbstractName {
         }
     }
     public append(c: string) {
-        if (!c) {
-            throw new IllegalArgumentException("Component cannot be empty or null");
+        if (c === null) {
+            throw new IllegalArgumentException("Component cannot be null");
         }
         const initialLength = this.components.length;
         this.components.push(c);

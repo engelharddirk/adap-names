@@ -79,7 +79,11 @@ export class StringName extends AbstractName {
     public getComponent(x: number): string {
         return this.escapedSplit(this.name)[x];
     }
+
     public setComponent(n: number, c: string) {
+        if (n < 0 || n > this.noComponents) {
+            throw new IllegalArgumentException("Index out of bounds");
+        }
         const arr = this.escapedSplit(this.name);
 		arr[n] = c;
 		this.name = this.arrToStr(arr);
@@ -89,8 +93,8 @@ export class StringName extends AbstractName {
         if (n < 0 || n > this.noComponents) {
             throw new IllegalArgumentException("Index out of bounds");
         }
-        if (!c) {
-            throw new IllegalArgumentException("Component cannot be empty or null");
+        if (c === null) {
+            throw new IllegalArgumentException("Component cannot be null");
         }
         const components = this.escapedSplit(this.name);
 		const newComponents: string[] = [];
@@ -109,8 +113,8 @@ export class StringName extends AbstractName {
     }
 
     public append(c: string) {
-        if (!c) {
-            throw new IllegalArgumentException("Component cannot be empty or null.");
+        if (c === null) {
+            throw new IllegalArgumentException("Component cannot be null.");
         }
         const arr = this.escapedSplit(this.name);
 		arr.push(c);
