@@ -1,4 +1,5 @@
-import { IllegalArgumentException } from "../common/IllegalArgumentException";
+import { ExceptionType, AssertionDispatcher } from "../common/AssertionDispatcher";
+
 import { Name } from "../names/Name";
 import { StringName } from "../names/StringName";
 import { Directory } from "./Directory";
@@ -24,17 +25,16 @@ export class RootNode extends Directory {
     }
 
     public move(to: Directory): void {
-        if(to === this){
-            throw new IllegalArgumentException("You have to move to a different directory");
-        }
         // null operation
     }
 
     protected doSetBaseName(bn: string): void {
-        if(bn === ""){
-            throw new IllegalArgumentException("Please provide a valid name");
-        }
         // null operation
+    }
+
+    protected assertIsValidBaseName(bn: string, et: ExceptionType): void {
+        const condition: boolean = (bn == ""); // Root must have "" as base name
+        AssertionDispatcher.dispatch(et, condition, "invalid base name");
     }
 
 }
