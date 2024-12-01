@@ -1,44 +1,83 @@
+import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 
 export abstract class AbstractName implements Name {
 
     protected delimiter: string = DEFAULT_DELIMITER;
-
     constructor(delimiter: string = DEFAULT_DELIMITER) {
-        throw new Error("needs implementation or deletion");
+        this.delimiter = delimiter ?? DEFAULT_DELIMITER;
     }
 
-    public clone(): Name {
-        throw new Error("needs implementation or deletion");
-    }
+    escapedSplit(string: string): string[] {
+		const ret: string[] = [];
+		let skip = false;
+		let component = "";
+		for (let i = 0; i < string.length; i++) {
+			switch (string[i]) {
+				case ESCAPE_CHARACTER: {
+					skip = true;
+					break;
+				}
+				case this.delimiter: {
+					if (skip === true) {
+						skip = false;
+						break;
+					}
+					ret.push(component);
+					component = "";
+					break;
+				}
+				default: {
+					component = `${component}${string[i]}`;
+				}
+			}
+		}
+		ret.push(component);
+		return ret;
+	}
 
-    public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation or deletion");
+    simpleHash(input: string): number {
+    let hash = 0;
+    for (let i = 0; i < input.length; i++) {
+        const char = input.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash |= 0;
     }
+    return hash;
+}
 
-    public toString(): string {
-        return this.asDataString();
-    }
+    abstract asString(): string;
 
+    public toString(): string{
+        return this.asString();
+    };
+
+    /* Abstract implementation just uses generic JSON stringify, should be overridden */
     public asDataString(): string {
-        throw new Error("needs implementation or deletion");
+        return JSON.stringify(this);
     }
 
     public isEqual(other: Name): boolean {
-        throw new Error("needs implementation or deletion");
+        if (other === null) {
+            throw new IllegalArgumentException("Other name cannot be null");
+        }
+        return other.getHashCode() === this.getHashCode();
     }
 
     public getHashCode(): number {
-        throw new Error("needs implementation or deletion");
+        const hashCode = this.simpleHash(this.asDataString());
+        return hashCode;
     }
 
+    abstract clone(): Name
+
     public isEmpty(): boolean {
-        throw new Error("needs implementation or deletion");
+        return this.asDataString().length === 0;
     }
 
     public getDelimiterCharacter(): string {
-        throw new Error("needs implementation or deletion");
+        return this.delimiter;
     }
 
     abstract getNoComponents(): number;
@@ -50,8 +89,5 @@ export abstract class AbstractName implements Name {
     abstract append(c: string): void;
     abstract remove(i: number): void;
 
-    public concat(other: Name): void {
-        throw new Error("needs implementation or deletion");
-    }
-
+    abstract concat(other: Name): void;
 }
