@@ -55,8 +55,6 @@ function createBuggySetup(): RootNode {
   let bashrc: File = new BuggyFile(".bashrc", riehle);
   let wallpaper: File = new BuggyFile("wallpaper.jpg", riehle);
   let projects: Directory = new Directory("projects", riehle);
-  console.log(ls.getParentNode().baseName);
-  console.log(ls.getBaseName());
   return rn;
 }
 
