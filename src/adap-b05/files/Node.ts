@@ -1,4 +1,3 @@
-import { ExceptionType, AssertionDispatcher } from "../common/AssertionDispatcher";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { InvalidStateException } from "../common/InvalidStateException";
 import { MethodFailedException } from "../common/MethodFailedException";
@@ -20,12 +19,12 @@ export class Node {
 
     protected initialize(pn: Directory): void {
         this.parentNode = pn;
-        this.parentNode.add(this);
+        this.parentNode.addChildNode(this);
     }
 
     public move(to: Directory): void {
-        this.parentNode.remove(this);
-        to.add(this);
+        this.parentNode.removeChildNode(this);
+        to.addChildNode(this);
         this.parentNode = to;
     }
 
@@ -85,16 +84,6 @@ export class Node {
             ServiceFailureException.assertCondition(false, "Error finding nodes", e)
         }
         return new Set<Node>();
-    }
-
-    protected assertClassInvariants(): void {
-        const bn: string = this.doGetBaseName();
-        this.assertIsValidBaseName(bn, ExceptionType.CLASS_INVARIANT);
-    }
-
-    protected assertIsValidBaseName(bn: string, et: ExceptionType): void {
-        const condition: boolean = (bn != "");
-        AssertionDispatcher.dispatch(et, condition, "invalid base name");
     }
 
 }

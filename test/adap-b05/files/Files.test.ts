@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
 
+import { Exception } from "../../../src/adap-b05/common/Exception";
+import { InvalidStateException } from "../../../src/adap-b05/common/InvalidStateException";
+import { ServiceFailureException } from "../../../src/adap-b05/common/ServiceFailureException";
+
 import { StringName } from "../../../src/adap-b05/names/StringName";
 
 import { Node } from "../../../src/adap-b05/files/Node";
@@ -32,13 +36,13 @@ function createFileSystem(): RootNode {
   return rn;
 }
 
-// describe("Basic naming test", () => {
-//   // it("test name checking", () => {
-//   //   let fs: RootNode = createFileSystem();
-//   //   let ls: Node = [...fs.findNodes("ls")][0];
-//   //   expect(ls.getFullName().isEqual(new StringName("/usr/bin/ls", '/')));
-//   // });
-// });
+describe("Basic naming test", () => {
+  it("test name checking", () => {
+    let fs: RootNode = createFileSystem();
+    // let ls: Node = [...fs.findNodes("ls")][0];
+    // expect(ls.getFullName().asString()).toBe(new StringName("/usr/bin/ls", '/'));
+  });
+});
 
 function createBuggySetup(): RootNode {
   let rn: RootNode = new RootNode();
