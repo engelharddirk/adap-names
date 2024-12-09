@@ -3,7 +3,7 @@ import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 import { StringArrayName } from "./StringArrayName";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
-import { MethodFailedException } from "../../adap-b05/common/MethodFailedException";
+import { MethodFailedException } from "../common/MethodFailedException";
 
 export class StringName extends AbstractName {
 

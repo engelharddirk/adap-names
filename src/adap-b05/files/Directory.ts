@@ -1,4 +1,4 @@
-import { AssertionDispatcher, ExceptionType } from "../common/AssertionDispatcher";
+
 import { ServiceFailureException } from "../common/ServiceFailureException";
 import { Node } from "./Node";
 
@@ -36,7 +36,6 @@ export class Directory extends Node {
             if (e instanceof ServiceFailureException) {
                 throw e;
             }
-            ServiceFailureException.assertCondition(false, "Error finding nodes", e)
         }
         return new Set<Node>();
     }

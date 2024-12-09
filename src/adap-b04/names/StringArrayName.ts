@@ -2,7 +2,7 @@ import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
-import { MethodFailureException } from "../common/MethodFailureException";
+import { MethodFailedException } from "../common/MethodFailedException";
 import { StringName } from "./StringName";
 
 export class StringArrayName extends AbstractName {
@@ -93,7 +93,7 @@ export class StringArrayName extends AbstractName {
 		}
 		this.components = newComponents;
         if (this.components.length !== newComponents.length) {
-            throw new MethodFailureException("Insertion failed, noComponents does not match.");
+            throw new MethodFailedException("Insertion failed, noComponents does not match.");
         }
     }
     public append(c: string) {
@@ -103,7 +103,7 @@ export class StringArrayName extends AbstractName {
         const initialLength = this.components.length;
         this.components.push(c);
         if (this.components.length !== initialLength + 1) {
-            throw new MethodFailureException("Append failed, noComponents does not match.");
+            throw new MethodFailedException("Append failed, noComponents does not match.");
         }
     }
     public remove(i: number) {
@@ -119,7 +119,7 @@ export class StringArrayName extends AbstractName {
         }
         this.components = newComponents;
         if (this.components.length !== newComponents.length) {
-            throw new MethodFailureException("Removal failed, noComponents does not match.");
+            throw new MethodFailedException("Removal failed, noComponents does not match.");
         }
     }
 }

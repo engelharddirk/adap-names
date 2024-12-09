@@ -19,7 +19,7 @@ export class Node {
     }
 
     public move(to: Directory): void {
-        this.parentNode.removeChildNode(this);
+        this.parentNode.remove(this);
         to.addChildNode(this);
         this.parentNode = to;
     }

@@ -9,9 +9,6 @@ import { StringName } from "../../../src/adap-b05/names/StringName";
 import { Node } from "../../../src/adap-b05/files/Node";
 
 import { RootNode } from "../../../src/adap-b05/files/RootNode";
-import { InvalidStateException } from "../../../src/adap-b05/common/InvalidStateException";
-import { ServiceFailureException } from "../../../src/adap-b05/common/ServiceFailureException";
-import { Exception } from "../common/Exception";
 
 import { File } from "../../../src/adap-b05/files/File";
 import { BuggyFile } from "../../../src/adap-b05/files/BuggyFile";

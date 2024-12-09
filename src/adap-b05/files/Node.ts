@@ -23,9 +23,17 @@ export class Node {
     }
 
     public move(to: Directory): void {
-        this.parentNode.removeChildNode(this);
+        this.parentNode.remove(this);
         to.addChildNode(this);
         this.parentNode = to;
+    }
+
+    protected assertClassInvariants(): void {
+        const bn: string = this.doGetBaseName();
+    }
+
+    protected assertIsValidBaseName(bn: string): void {
+        const condition: boolean = (bn != "");
     }
 
     public getFullName(): Name {
@@ -33,6 +41,7 @@ export class Node {
         result.append(this.getBaseName());
         return result;
     }
+
 
     public getBaseName(): string {
         console.log("baseName: " + this.baseName);
@@ -81,7 +90,6 @@ export class Node {
             if (e instanceof ServiceFailureException) {
                 throw e;
             }
-            ServiceFailureException.assertCondition(false, "Error finding nodes", e)
         }
         return new Set<Node>();
     }

@@ -9,6 +9,10 @@ export class Directory extends Node {
         super(bn, pn);
     }
 
+    public addChildNode(cn: Node): void {
+        this.childNodes.add(cn);
+    }
+
     public add(cn: Node): void {
         if(!this.childNodes.has(cn)){throw new IllegalArgumentException("Node already exists");}
         this.childNodes.add(cn);

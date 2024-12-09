@@ -4,7 +4,6 @@ import { AbstractName } from "./AbstractName";
 import { StringArrayName } from "./StringArrayName";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { MethodFailedException } from "../../adap-b05/common/MethodFailedException";
-import { MethodFailureException } from "../common/MethodFailureException";
 
 export class StringName extends AbstractName {
 
@@ -42,7 +41,7 @@ export class StringName extends AbstractName {
 			}
 		}
         if (!this.name) {
-            throw new MethodFailureException("Concatenation failed, resulting name cannot be empty or null");
+            throw new MethodFailedException("Concatenation failed, resulting name cannot be empty or null");
         }
 	}
 
@@ -52,7 +51,7 @@ export class StringName extends AbstractName {
 			str = str.replace(this.delimiter, delimiter);
 		}
         if (!str) {
-            throw new MethodFailureException("Resulting string cannot be empty or null.");
+            throw new MethodFailedException("Resulting string cannot be empty or null.");
         }
 		return str;
 	}
@@ -60,14 +59,14 @@ export class StringName extends AbstractName {
     public clone(): StringName {
         const clone = new StringName(this.name, this.delimiter);
         if (!clone) {
-            throw new MethodFailureException("Cloning failed, resulting clone cannot be null");
+            throw new MethodFailedException("Cloning failed, resulting clone cannot be null");
         }
         return clone;
 	}
 
 	public asDataString(): string {
         if (!this.name) {
-            throw new MethodFailureException("Name was empty or null");
+            throw new MethodFailedException("Name was empty or null");
         }
 		return this.name;
 	}
@@ -108,7 +107,7 @@ export class StringName extends AbstractName {
 		this.name = this.arrToStr(newComponents);
 		this.noComponents++;
         if (this.noComponents !== newComponents.length) {
-            throw new MethodFailureException("Insertion failed, noComponents does not match");
+            throw new MethodFailedException("Insertion failed, noComponents does not match");
         }
     }
 
@@ -121,7 +120,7 @@ export class StringName extends AbstractName {
 		this.name = this.arrToStr(arr);
 		this.noComponents++;
         if (this.noComponents !== arr.length) {
-            throw new MethodFailureException("Append failed, noComponents does not match");
+            throw new MethodFailedException("Append failed, noComponents does not match");
         }
     }
 
@@ -140,7 +139,7 @@ export class StringName extends AbstractName {
 		this.noComponents--;
 		this.name = this.arrToStr(newComponents);
         if (this.noComponents !== newComponents.length) {
-            throw new MethodFailureException("Removal failed, noComponents does not match");
+            throw new MethodFailedException("Removal failed, noComponents does not match");
         }
     }
 
